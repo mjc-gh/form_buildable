@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -15,6 +13,7 @@
 ActiveRecord::Schema[7.1].define(version: 2024_04_28_143943) do
   create_table "posts", force: :cascade do |t|
     t.string "title"
+    t.string "author"
     t.text "body"
     t.datetime "published_on"
     t.datetime "created_at", null: false

@@ -1,0 +1,35 @@
+name: FormBuildable
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Ruby 3
+      uses: ruby/setup-ruby@v1
+
+    - name: Cache Gems
+      id: gem-cache
+      uses: actions/cache@v2
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-v2-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-v2-
+
+    - name: Bundle Install
+      run: |
+        bundle config set --local path 'vendor/bundle'
+        bundle install --jobs 4 --retry 3
+
+    - name: Setup DB
+      run: cd test/dummy && bin/rails db:drop db:create db:migrate --trace
+
+    - name: Run gem tests
+      env:
+        RAILS_ENV: test
+      run: bin/test

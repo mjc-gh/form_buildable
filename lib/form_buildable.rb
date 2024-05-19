@@ -2,10 +2,13 @@
 
 require "active_support"
 require "active_support/core_ext"
+require "action_view"
+require "rails/railtie"
 
 require "form_buildable/version"
 require "form_buildable/base"
 require "form_buildable/options"
+require "form_buildable/options/html_classes_context"
 require "form_buildable/railtie"
 require "form_buildable/factory"
 

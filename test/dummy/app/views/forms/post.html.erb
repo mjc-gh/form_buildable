@@ -1,0 +1,6 @@
+<%= default_form_with model: Post.new, url: "/posts" do |form| -%>
+  <%= form.text_field :title -%>
+  <%= form.text_area :body -%>
+  <%= form.time_field :published_on -%>
+  <%= form.email_field :author -%>
+<% end -%>

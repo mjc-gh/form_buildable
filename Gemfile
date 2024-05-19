@@ -11,3 +11,6 @@ gem "sqlite3"
 # Start debugger with binding.b [https://github.com/ruby/debug]
 gem "pry"
 # gem "debug", ">= 1.0.0"
+
+gem "guard"
+gem "guard-minitest"

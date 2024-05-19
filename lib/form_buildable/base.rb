@@ -12,13 +12,13 @@ module FormBuildable
 
         if label
           if has_error
-            label(method, label_text(label)) + yield(method, *args, **kwargs) + error_tag(method, id: field_id(method))
+            label(method, label_text(label)) + yield(method, *args, **kwargs) + error_tag(method)
           else
             label(method, label_text(label)) + yield(method, *args, **kwargs)
           end
         else
           if has_error
-            yield(method, *args, **kwargs) + error_tag(method, id: field_id(method))
+            yield(method, *args, **kwargs) + error_tag(method)
           else
             yield(method, *args, **kwargs)
           end
@@ -27,11 +27,11 @@ module FormBuildable
     end
 
     def error_tag(method, id: nil)
-      id ||= "#{@object.model_name.singular}_#{method}"
+      id ||= "#{@object.model_name.singular}-#{method}-error"
 
       # TODO allow customization of the HTML for this field wrapper tag (or tags)
       @template.tag.div class: html_classes_for(:error_container) do
-        @template.tag.p class: html_classes_for(:error), 'aria-live': "polite", id: id, data: { error: id } do
+        @template.tag.p class: html_classes_for(:error), 'aria-live': "polite", id:, data: { error: id } do
           @object.errors.full_messages_for(method).join("\n")
         end
       end
@@ -53,7 +53,7 @@ module FormBuildable
 
       return cb_tag unless @object&.errors&.key?(method)
 
-      cb_tag + error_tag(method, id: field_id(method))
+      cb_tag + error_tag(method)
     end
 
     def label(method, text = nil, options = {}, &block)

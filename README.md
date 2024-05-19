@@ -1,5 +1,7 @@
 # FormBuildable
 
+[![FormBuildable](https://github.com/mjc-gh/form_buildable/actions/workflows/actions.yml/badge.svg)](https://github.com/mjc-gh/form_buildable/actions/workflows/actions.yml)
+
 Declaratively build
 [FormBuilder](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html)
 classes in Rails. Goes great with TailwindCSS!
@@ -11,23 +13,24 @@ module ApplicationHelper
   include FormBuildable
 
   define_form_builder :default do
-    button_html_class {
-      "inline-flex items-center justify-center rounded border shadow-sm font-medium px-4 py-2 "\
-      "text-sm border-transparent text-white bg-blue-600 md:text-base lg:text-lg hover:bg-blue-800 "
-    }
+    html_classes do
+      button {
+        "inline-flex items-center justify-center rounded border shadow-sm font-medium px-4 py-2 text-sm "\
+        " border-transparent text-white bg-blue-600 md:text-base lg:text-lg hover:bg-blue-800 "
+      }
 
-    form_html_class { "space-y-4" }
+      form { "space-y-4" }
+      field { "flex flex-col gap-2" }
 
-    field_html_class { "flex flex-col gap-2" }
+      check_box_input { "w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded" }
+      check_box { "flex gap-2 items-center" }
+      check_box_label { "text-md" }
 
-    check_box_input_html_class { "w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded" }
-    check_box_html_class { "flex gap-2 items-center" }
-    check_box_label_html_class { "text-md" }
+      input { "rounded-lg border-slate-300 p-2 text-slate-900 " }
 
-    input_html_class { "rounded-lg border-slate-300 p-2 text-slate-900 " }
-
-    error_container_html_class { "flex justify-start" }
-    error_html_class { "text-sm text-rose-200 font-bold whitespace-pre" }
+      error_container { "flex justify-start" }
+      error { "text-sm text-red-700 font-bold whitespace-pre" }
+    end
   end
 
   define_form_builder :inline do
@@ -69,27 +72,20 @@ And when there is an error, the model's errors are automatically added
 to the markup
 
 ```html
-<div class="flex flex-col gap-2">
-  <div class="field_with_errors">
-    <label for="email_email">Email</label>
+<form class="space-y-4" action="/registrations" method="post">
+  <div class="flex flex-col gap-2">
+    <label for="email_address">Address</label><input class="rounded-lg border-slate-300 p-2 text-slate-900" type="email" value="" name="email[address]" id="email_address" />
+    <div class="flex justify-start"><p class="text-sm text-red-700 font-bold whitespace-pre" aria-live="polite" id="email-address-error" data-error="email-address-error">Address is invalid</p></div>
   </div>
-  <div class="field_with_errors">
-    <input class="rounded-lg border-slate-300 p-2 text-slate-900" type="email" value="" name="email[email]" id="email_email"/>
+  <div class="flex gap-2 items-center">
+    <input name="email[accepted_terms]" type="hidden" value="0" autocomplete="off" />
+    <input class="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded" type="checkbox" value="1" name="email[accepted_terms]" id="email_accepted_terms" /><label class="text-md" for="email_accepted_terms">Accepted terms</label>
   </div>
-  <div class="flex justify-start">
-    <p class="text-sm text-red-700 font-bold whitespace-pre" aria-live="polite" id="email_email" data-error="email_email">Email can &#39;t be blank
-      Email is invalid</p>
-  </div>
-</div>
-<div class="flex gap-2 items-center">
-  <input name="email[accepted_terms]" type="hidden" value="0" autocomplete="off"/>
-  <div class="field_with_errors">
-    <input class="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded" type="checkbox" value="1" name="email[accepted_terms]" id="email_accepted_terms"/>
-  </div>
-  <div class="field_with_errors">
-    <label class="text-md" for="email_accepted_terms">Accepted terms</label>
-  </div>
-</div>
+  <div class="flex justify-start"><p class="text-sm text-red-700 font-bold whitespace-pre" aria-live="polite" id="email-accepted_terms-error" data-error="email-accepted_terms-error">Accepted terms must be accepted</p></div>
+  <button name="button" type="submit" class="inline-flex items-center justify-center rounded border shadow-sm font-medium px-4 py-2 text-sm border-transparent text-white bg-blue-600 md:text-base lg:text-lg hover:bg-blue-800">
+    Create Email
+  </button>
+</form>
 ```
 
 ## TODO
@@ -99,7 +95,8 @@ So much! Maybe?
 - Radio buttons, selects, and other fields
 - Customize HTML of wrapper methods
 - Customize error and label HTML placement with the inputs
-- Form hints
+- Form hints, placeholders, and more I18n customizations
+- Document other new form builder methods like `error_tag` and `field`
 
 ## Installation
 Add this line to your application's Gemfile:

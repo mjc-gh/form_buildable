@@ -1,9 +1,17 @@
+require:
+  - rubocop-rails
+
 AllCops:
   DisabledByDefault: true
   Exclude:
     - bin/**/*
+    - db/**/*
+    - config/**/*
+    - node_modules/**/*
+    - vendor/**/*
     - Gemfile
-  TargetRubyVersion: 3.2
+    - config.ru
+  TargetRubyVersion: 3.3
 
 Layout/CaseIndentation:
   Enabled: true
@@ -103,6 +111,41 @@ Naming/VariableNumber:
   AllowedIdentifiers:
     - google_oauth2
     - urlsafe_base64
+
+Rails/ActionFilter:
+  Enabled: true
+Rails/ActiveRecordCallbacksOrder:
+  Enabled: true
+Rails/AddColumnIndex:
+  Enabled: true
+Rails/AfterCommitOverride:
+  Enabled: true
+Rails/AssertNot:
+  Enabled: true
+Rails/BelongsTo:
+  Enabled: true
+Rails/Blank:
+  Enabled: true
+Rails/ContentTag:
+  Enabled: true
+Rails/CreateTableWithTimestamps:
+  Enabled: true
+Rails/Date:
+  # TODO
+  # https://docs.rubocop.org/rubocop-rails/cops_rails.html#railsdate
+ Enabled: false
+Rails/DefaultScope:
+  Enabled: true
+Rails/Delegate:
+  Enabled: true
+Rails/DelegateAllowBlank:
+  Enabled: true
+Rails/EnumHash:
+  # TODO
+  # https://docs.rubocop.org/rubocop-rails/cops_rails.html#railsenumhash
+  Enabled: false
+Rails/EnumUniqueness:
+  Enabled: true
 
 Security/Eval:
   Enabled: true

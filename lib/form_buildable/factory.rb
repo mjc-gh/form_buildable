@@ -25,8 +25,8 @@ module FormBuildable
 
         field_methods.each do |method|
           class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
-            def #{method.name}(method, *original_args)
-              field(method, *original_args) { |*args, **kwargs| super *args, **kwargs }
+            def #{method.name}(method, *, **)
+              field(method, *, **) { |*args, **kwargs| super *args, **kwargs }
             end
           RUBY_EVAL
         end

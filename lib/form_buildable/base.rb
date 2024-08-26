@@ -26,6 +26,13 @@ module FormBuildable
       end
     end
 
+    def fields_for(record_name, record_object = nil, fields_options = nil, &block)
+      fields_options ||= {}
+      fields_options[:builder] = self.class
+
+      super record_name, record_object, fields_options, &block
+    end
+
     def error_tag(method, id: nil)
       id ||= "#{@object.model_name.singular}-#{method}-error"
 

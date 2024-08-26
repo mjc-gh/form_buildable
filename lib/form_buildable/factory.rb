@@ -16,7 +16,11 @@ module FormBuildable
 
     def new_buildable_class
       # Method methods text_field, email_field, etc.
-      field_methods = instance_methods.select { _1.arity == -2 && _1.name =~ /_field\z/ }
+      field_methods = instance_methods.select do |method|
+        method.arity == -2 &&
+          method.name =~ /_field|text_area\z/ &&
+          !method.name.in?(%i[hidden_field])
+      end
 
       Class.new(FormBuildable::Base) do
         extend Options

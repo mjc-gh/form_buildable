@@ -19,6 +19,7 @@ module FormBuildable
         input
         label
         select
+        submit
       ].each do |method|
         class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
           def #{method}(&block)

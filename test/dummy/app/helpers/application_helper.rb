@@ -6,6 +6,7 @@ module ApplicationHelper
   define_form_builder :default do
     html_classes do
       button { "btn" }
+      submit { "submit" }
 
       form { "default-form" }
       field { "default-form-control" }

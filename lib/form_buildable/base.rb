@@ -50,6 +50,12 @@ module FormBuildable
       super value, options, &block
     end
 
+    def submit(value = nil, options = {}, &block)
+      options[:class] = prepend_html_class(options[:class], html_classes_for(:submit))
+
+      super value, options, &block
+    end
+
     def check_box(method, options = {}, *args, &block)
       options[:class] = prepend_html_class(options[:class], html_classes_for(:check_box_input))
 

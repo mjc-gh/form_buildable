@@ -3,4 +3,16 @@
   <%= form.text_area :body -%>
   <%= form.time_field :published_on -%>
   <%= form.email_field :author -%>
+  <%= form.number_field :ranking -%>
+  <%= form.url_field :canonical_url -%>
+  <%= form.password_field :api_key -%>
+  <%= form.search_field :keywords -%>
+  <%= form.telephone_field :contact_phone -%>
+  <%= form.date_field :draft_date -%>
+  <%= form.checkbox :published -%>
+  <%= form.radio_button :status, "draft" -%>
+  <%= form.radio_button :status, "published" -%>
+  <%= form.select :category, ["News", "Blog", "Tutorial"] -%>
+  <%= form.submit "Submit Post" -%>
+  <%= form.button "Create Post" -%>
 <% end -%>
